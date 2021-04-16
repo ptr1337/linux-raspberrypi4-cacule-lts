@@ -7,7 +7,7 @@
 buildarch=12
 
 pkgbase=linux-raspberrypi4-cacule-lts
-_commit=b460129fcbebe39b8ce1a3dfc18129998d12c40b
+_commit=69742473e63108cd606210f57603ac35708950d4
 _srcname=linux-${_commit}
 _kernelname=${pkgbase#linux}
 _desc="Raspberry Pi 4 with the cacule scheduler"
@@ -63,7 +63,11 @@ prepare() {
   patch -Np1 -i ../0001-Make-proc-cpuinfo-consistent-on-arm64-and-arm.patch
   # cacule-scheduler
   patch -Np1 -i ../cacule-5.10.patch
+  
+  if [[ $CARCH == "armv7h" ]]; then
   patch -Np1 -i ../cacule-32bit-converter.patch #only needed if building on armv6 or armv7
+  fi
+  
 }
 
 build() {
